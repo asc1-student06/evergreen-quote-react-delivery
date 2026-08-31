@@ -1,32 +1,40 @@
 # Evergreen Quote: Vision Brief
 
+> Copy this file into `delivery-leadership-package/vision-brief.md` in your repo and fill it in. Target length: 1 page (~300 words). Write for a Liberty Mutual VP who has 90 seconds.
+
 ## Product
-**Name:** Evergreen Insurance Quote (Phase 2 React rebuild)
-**Delivery week:** 2
-**Delivery Lead:** Alex Rivera
-**Engineering team (represented by):** https://github.com/alex-rivera/evergreen-quote-react-delivery
-**GitHub Project board:** https://github.com/users/alex-rivera/projects/7
+**Name:** Kristen Marturano
+**Delivery week:** 2026-08-31
+**Delivery Lead:** Kristen Marturano
+**Engineering team (represented by):** (https://github.com/asc1-student06/evergreen-quote-react-delivery)
+**GitHub Project board:** https://github.com/users/asc1-student06/projects/5/views/1
 
 ## Who is the customer?
-A first-time insurance shopper, a new renter or new homeowner in their 20s or 30s, who was told they "need insurance by the 1st" and wants a fast, no-commitment number on their phone. They have never bought insurance, are not loyal to a carrier, and will pick whichever site shows a believable number fastest.
+Prospective insurance customers who want a fast, self-serve estimate of their monthly premium before talking to an agent. They value speed, clarity, and a sense that the number they see is trustworthy.
 
 ## What pain does Evergreen Quote remove?
-The Phase 1 page already showed a number after a button press. But this customer compares as they think (*"what if I picked home instead of auto? what if I raised the coverage?"*), and every press-and-wait cycle loses a few of them. Phase 2 makes the number move *as they type*, shows them what other customers are paying, and lets them save a quote to compare. No account, no email, no waiting.
+Today, getting a premium estimate means calling an agent or filling out a long form and waiting. Evergreen Quote removes that friction: the customer picks a coverage type, enters a few details, and sees an instant estimate that updates as they adjust the inputs - no phone call, no waiting.
 
 ## What does "good" look like at end of the week?
-- `npm install && npm run dev` works first time from the committed lock file.
-- The estimated premium updates live as the visitor types, for auto / home / life, under the sponsor's rate decision.
-- Recent quotes load from the data feed with a visible loading state; a saved quote appears at the top of the list instantly.
-- `npm run type-check` and `npm run build` pass; what CI builds is what ships.
-- The work is on `main` via a reviewed PR with a green CI run, and I can demo it Friday without pre-apologizing.
+A working, assembled Evergreen Quote React app that:
+- Shows a live premium estimate that recalculates as the customer types 
+- Has the correct product title and the sponsor's approved rates configured.
+- Passes the TypeScript type-check (contracts hold- no bad data reaches a customer).
+- Loads recent quotes from a data feed with proper loading/ error/ susccess states.
+- Uses the provided custom hook + context provider, with "Save this quote" working.
+- Is merged to 'main' via a reviewed PR with a green CI run and a passing production build.
 
 ## What are we explicitly NOT doing this week?
-- No ZIP-code field / regional pricing (marketing's ask); deferred, see decision-memo.md.
-- No real rate engine; the typed rate model is a placeholder, and pricing is engineering's job in a future round.
-- No customer accounts, no persistence of saved quotes, no email capture.
-- No toolchain upgrade mid-week; the versions stay pinned, see status-update.md.
+- Writing application code from scratch (this is assembly, not authoring).
+- Building a backend, database, user accounts, or payment/policy binding.
+- Refactoring the engineering team's starter project.
+- Adding in coverage types or features beyond what the kit provides (unless a sponsor inject asks for it). 
 
 ## How will we know if it worked?
-- 100% of cohort stakeholders see the estimate move as they type, on the first try, with no console errors.
-- The recent-quotes panel never shows a blank space; it shows data, a loading message, or an error message, always.
-- The delivery review demo runs end-to-end without me needing to say "imagine that…".
+We'll know this week succeeded if, by Thursday EOD, all of the following are true:
+- **It runs:** the app loads and a customer can get a live premium estimate that updates as they change inputs.
+- **The contracts hold:** 'npm run type-check' passes with no errors, and the production build ('npm run build') completes successfully.
+- **The data feed works:** recent quotes load from the feed, and the customer always sees one of three states - loading, error, or the actual data (never a blank panel). 
+- **Save works**: clicking "Save this quote" adds it to the top of the list.
+- **It's shipped properly:** the work is merged to 'main' through a reviewed PR with a **green CI run** - not pushed straight to main. 
+- **The board tells the story:** every issue is in Done with its done-criteria met, so a stranger could look at the board and see what was delivered.
