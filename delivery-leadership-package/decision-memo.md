@@ -1,27 +1,28 @@
-# Decision Memo: Defer the ZIP-Code Field to a Future Round
+# Decision Memo: _short title here_
 
-**Date:** Tue afternoon (after Inject #1)
-**Author:** Alex Rivera
-**Decision area:** This week's scope tradeoff
+> Copy to `delivery-leadership-package/decision-memo.md`. Target length: ~250 words. Write for a non-technical reader. Name the options you **rejected**, not just the one you picked.
+
+**Date:** 9/1/2026
+**Author:** Kristen Marturano, Delivery Lead
+**Decision area:** Defer the ZIP-code field to next round; do NOT add it this week.
 
 ## Context
 
-Marketing asked Tuesday at 14:00 for a ZIP-code field on the quote form by Thursday, to A/B test regional pricing; they say the pricing table is ready. It sounds like "one small text box." It isn't: in a typed codebase the quote's shape is a shared contract (`types.ts`), and every piece the engineering team handed us (the form, the premium model, the data feed, the saved-quotes context) is written against it. Change the contract and the compiler will, correctly, demand every layer be updated together.
+Marketing has asked us to add a ZIP-code field to the quote form by Thursday to support a regional-pricing A/B test. Our committed goal this week is a working, typed, data-loading Evergreen Quote app merged to main with a green build. The question is whether the ZIP field fits inside this week without putting that goal at risk.
 
 ## Options considered
 
-1. **Add the field properly by Thursday.** Pros: marketing starts testing this week. Cons: touches `types.ts`, the rate model, the form component, the hook, the context, and the data feed; a cross-cutting change landing 36 hours before the delivery review, on top of Wednesday's planned data-loading and refactor work.
-2. **Add a display-only ZIP box that feeds nothing.** Pros: fast, demo looks responsive to marketing. Cons: a field that silently ignores customer input is worse than no field; it would also fail the A/B test's purpose.
-3. **Defer to a future round.** Pros: keeps the delivery goal intact; the change lands as one well-typed piece of work with room to verify. Cons: marketing waits one round.
+1. **Option A: Add the ZIP field this week** Meets Marketing's Thursday date, but the field is not a cosmetic "box". To do it properly, ZIP has to travel through every layer of the app: the data definition that describes a quote, the form the customer fills in, the pricing calculation, and the saved-quote records. Our tooling deliberately blocks the build until every one of those layers agrees, which is a safety feature, but it means this is a multi-part change, not a one-line add. Doing it under time pressure risk the green build we owe by Thursday.
+2. **Option B: Deliver the committed app this week; schedule ZIP for the next round** We ship the assembled, typed, data-loading app on time with a green build, and take the ZIP field as the first item of the next round, done properly end-to-end with the regional-pricing table Marketing says is ready.
 
 ## Recommendation
 
-**Option 3.** Defer the ZIP-code field. Offer marketing a concrete slot: it is first on the roadmap for the next round, estimated as one to two days of engineering work *because* the type system makes the full blast radius visible up front.
+**Option B:** Deliver what we committed this week; schedule the ZIP field for the next round. 
 
 ## Why
 
-The delivery goal is a demo without pre-apologizing. The typed contract doesn't make the field expensive; it makes the field's *true cost visible*, and that cost doesn't fit in the 36 hours we have without betting the week on it.
+The value we promised this week is a trustworthy, working quote experience merged cleanly. The ZIP field is a real, worthwhile feature, but because it touches every layer of the app, adding it in the last two days would put the green build at risk for a change that isn't finished being designed on the pricing side. Deferring it one round lets us do it correctly and verifiably, rather than rushing a customer-facing pricing change. The cost of the ZIP field is *knowable* precisely because our tooling forces every layer to be updated, so we can plan it, not gamble on it.
 
 ## What would change my mind
 
-If marketing confirmed by Wednesday 11:00 that a *display-only* field with a "coming soon" label meets their test's needs (it measures interest, not pricing), I would reconsider option 2 with that label made explicit.
+If Marketing's A/B test has a hard external deadline this week that can't move, or if the ZIP field can be scoped as display-only (collected but not yet affecting price), I'd revisit, a display-only field is a far smaller change than one wired into pricing.
